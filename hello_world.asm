@@ -12,6 +12,7 @@ _start:
 	MOV	rdi, 1		; stdout
 	MOV	rsi, msg	; hallo welt nachricht
 	MOV	rdx, len	; laenge der Nachricht
+	SYSCALL
 
 	MOV	rax, 60		; sys_exit
 	MOV	rdi, 0		; kein Fehler

@@ -1,0 +1,44 @@
+Eigenstaendiges Programm kompilieren:
+nasm -f elf64 <filename.asm>
+ld -s -o <outputname> <filename.o>
+./outputname <1. parameter> <2. parameter> <3. parameter> ...
+
+externe Funktion fuer C kompilieren:
+!!! NASM Funktion muss in C mit Schluesslewort 'extern' deklariert werden !!!
+!!! Funktionsname in C muss einem globalen Label in NASM entsprechen, NASM Schluesselwort 'GLOBAL' !!!
+nasm -f elf64 <filename.asm>
+gcc -std=c99 <cfile.c> <nasmfile.o> -o <outputname>
+
+Register:
+Integer Register (genrall purpuse register):
+8bit:	AL/AH, CL/CH, DL/DH, BL/BH, SPL, BPL, SIL, DIL, R8B-R15B 
+16bit:	AX, CX, DX, BX, SP, BP, SI, DI, R8W-R15W   
+32bit:	EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI, R8D-R15D   
+64bit:	RAX, RCX, RDX, RBX, RSP, RBP, RSI, RDI, R8-R15
+Float Register:
+64bit:	mm0 - mm7
+128bit:	xmm0 - xmm7
+
+Paramteruebergabe aus C (64bit):
+Integerparameter (Ganzzahlen, Pointer, Chars):
+ein Parameter: 		P1 : rax, rdi, r11
+zwei Parameter: 	P1 : rax, rdi	P2 : rdx, rsi, r11
+drei Parameter:		P1 : rax, rdi	P2 : rsi, rcx	P3 : rdx, r11
+vier Parameter:		P1 : rax, rdi	P2 : rsi	P3 : rdx	P4 : rcx, r11
+fuenf Parameter:	P1 : rax, rdi	P2 : rsi	P3 : rdx	P4 : rcx	P5 : r8, r11
+sechs Parameter:	P1 : rax, rdi	P2 : rsi	P3 : rdx	P4 : rcx	P5 : r8 	P6: r9, r11
+!!! bei 32bit liegen die Paramter auf dem Stack !!!
+Floatparameter:
+xmm0 - xmm7
+
+Paramter von der Konsole liegen wiefolgt auf dem Stack:
+Anzahl uebergebene Parameter 	<Integer>
+Aufrufender Pfad		<String>
+1. Parameter			<String>
+2. Parameter			<String>
+3. Parameter			<String>
+.
+.
+.
+
+Als Rückgabewert, egal ob Programm oder Funktion wird der Inhalt von rax/eax/ax/al gewertet.
